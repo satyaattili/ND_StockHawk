@@ -14,9 +14,11 @@ import org.json.JSONObject;
  */
 public class Utils {
 
+  private static final String KEY_CREATED = "created";
   private static String LOG_TAG = Utils.class.getSimpleName();
 
   public static boolean showPercent = true;
+  public static String created;
 
   public static ArrayList quoteJsonToContentVals(String JSON){
     ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
@@ -27,6 +29,7 @@ public class Utils {
       if (jsonObject != null && jsonObject.length() != 0){
         jsonObject = jsonObject.getJSONObject("query");
         int count = Integer.parseInt(jsonObject.getString("count"));
+        created = jsonObject.getString(KEY_CREATED);
         if (count == 1){
           jsonObject = jsonObject.getJSONObject("results")
               .getJSONObject("quote");
@@ -80,6 +83,7 @@ public class Utils {
       builder.withValue(QuoteColumns.PERCENT_CHANGE, truncateChange(
           jsonObject.getString("ChangeinPercent"), true));
       builder.withValue(QuoteColumns.CHANGE, truncateChange(change, false));
+      builder.withValue(QuoteColumns.CREATED, created);
       builder.withValue(QuoteColumns.ISCURRENT, 1);
       if (change.charAt(0) == '-'){
         builder.withValue(QuoteColumns.ISUP, 0);
