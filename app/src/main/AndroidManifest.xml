@@ -37,15 +37,30 @@
                 <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY"/>
             </intent-filter>
         </service>
+
         <service android:name=".service.StockIntentService"/>
+
+        <service
+            android:name=".service.StockWidgetRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
 
         <provider
             android:name=".data.generated.QuoteProvider"
             android:authorities="com.sam_chordas.android.stockhawk.data.QuoteProvider"
             android:exported="false"/>
 
-        <activity android:name=".ui.StockGraphActivity">
+        <activity android:name=".ui.StockGraphActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <receiver android:name=".widget.SHWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/sh_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

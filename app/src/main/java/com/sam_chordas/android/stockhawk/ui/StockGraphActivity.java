@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -34,26 +35,36 @@ public class StockGraphActivity extends AppCompatActivity implements
   private static final String LOG_TAG = "StockGraphActivity";
   private Cursor mCursor;
   private LineChart mChart;
-  int maxRange,minRange;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_stock_graph);
-    mChart = (LineChart) findViewById(R.id.chart1);
-    mChart.setDragDecelerationFrictionCoef(0.9f);
 
-    // enable scaling and dragging
-    mChart.setDragEnabled(true);
-    mChart.setScaleEnabled(true);
-    mChart.setDrawGridBackground(false);
-    mChart.setHighlightPerDragEnabled(true);
-    mChart.animateX(2500);
+    setContentView(R.layout.activity_stock_graph);
+
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
+
+    initChart();
 
     Intent intent = getIntent();
     Bundle args = new Bundle();
+    toolbar.setTitle(intent.getStringExtra(getResources().getString(R.string.string_symbol)));
     args.putString(getResources().getString(R.string.string_symbol), intent.getStringExtra(getResources().getString(R.string.string_symbol)));
     getLoaderManager().initLoader(CURSOR_LOADER_ID, args, this);
+  }
+
+  private void initChart() {
+    mChart = (LineChart) findViewById(R.id.stockGraph);
+    if(mChart != null){
+      mChart.setDragDecelerationFrictionCoef(0.9f);
+      mChart.setDragEnabled(true);
+      mChart.setScaleEnabled(true);
+      mChart.setDrawGridBackground(false);
+      mChart.setHighlightPerDragEnabled(true);
+      mChart.animateX(800);
+    }
+
   }
 
   @Override
@@ -88,7 +99,7 @@ public class StockGraphActivity extends AppCompatActivity implements
       if(time != null){
         xVals.add(time);
         yVals.add(new Entry(price, i));
-        Log.d(LOG_TAG, "Tine : "+time);
+        Log.d(LOG_TAG, "Time : "+time);
         Log.d(LOG_TAG, "price : "+price);
       }
 
@@ -116,7 +127,7 @@ public class StockGraphActivity extends AppCompatActivity implements
       set1.setColor(Color.BLACK);
       set1.setCircleColor(getResources().getColor(R.color.accent));
       set1.setLineWidth(1f);
-      set1.setCircleRadius(5f);
+      set1.setCircleRadius(2f);
       set1.setDrawCircleHole(false);
       set1.setValueTextSize(9f);
       set1.setDrawFilled(true);
