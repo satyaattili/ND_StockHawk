@@ -14,7 +14,7 @@ import com.google.android.gms.gcm.TaskParams;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
-import com.sam_chordas.android.stockhawk.rest.Utils;
+import com.sam_chordas.android.stockhawk.utils.AppUtils;
 
 /**
  * Created by sam_chordas on 10/1/15.
@@ -112,7 +112,7 @@ public class StockIntentService extends IntentService {
                       views.setInt(R.id.change, getResources().getString(R.string.string_set_background_resource), R.drawable.percent_change_pill_red);
                   }
 
-                  if (Utils.showPercent) {
+                  if (AppUtils.showPercent) {
                       views.setTextViewText(
                           R.id.change, data.getString(data.getColumnIndex(QuoteColumns.PERCENT_CHANGE)));
                   } else {

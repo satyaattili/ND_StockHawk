@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,14 +29,13 @@ import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.rest.QuoteCursorAdapter;
 import com.sam_chordas.android.stockhawk.rest.RecyclerViewItemClickListener;
-import com.sam_chordas.android.stockhawk.rest.Utils;
+import com.sam_chordas.android.stockhawk.utils.AppUtils;
 import com.sam_chordas.android.stockhawk.service.StockIntentService;
 import com.sam_chordas.android.stockhawk.service.StockTaskService;
 import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 import com.sam_chordas.android.stockhawk.touch_helper.SimpleItemTouchHelperCallback;
-import com.sam_chordas.android.stockhawk.utils.AppUtils;
 
 public class MyStocksActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
@@ -95,7 +95,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
               @Override public void onItemClick(View v, int position) {
                 Intent graphIntent = new Intent(mContext, StockGraphActivity.class);
                 mCursor.moveToPosition(position);
-                graphIntent.putExtra(getResources().getString(R.string.string_symbol), mCursor.getString(mCursor.getColumnIndex(getResources().getString(R.string.string_symbol))));
+                graphIntent.putExtra(getResources().getString(R.string.string_symbol), mCursor
+                    .getString(mCursor.getColumnIndex(getResources().getString(R.string
+                        .string_symbol))));
                 mContext.startActivity(graphIntent);
               }
             }));
@@ -206,7 +208,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     if (id == R.id.action_change_units){
       // this is for changing stock changes from percent value to dollar value
-      Utils.showPercent = !Utils.showPercent;
+      AppUtils.showPercent = !AppUtils.showPercent;
       this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
     }
 

@@ -94,14 +94,19 @@ public class StockGraphActivity extends AppCompatActivity implements
 
     mCursor.moveToFirst();
     for (int i = 0; i < mCursor.getCount(); i++){
-      float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
-      String time = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.CREATED));
-      if(time != null){
-        xVals.add(time);
-        yVals.add(new Entry(price, i));
-        Log.d(LOG_TAG, "Time : "+time);
-        Log.d(LOG_TAG, "price : "+price);
+      try{
+        float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
+        String time = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.CREATED));
+        if(time != null){
+          xVals.add(time);
+          yVals.add(new Entry(price, i));
+          Log.d(LOG_TAG, "Time : "+time);
+          Log.d(LOG_TAG, "price : "+price);
+        }
+      }catch (NumberFormatException exp){
+          exp.printStackTrace();
       }
+
 
       mCursor.moveToNext();
     }
