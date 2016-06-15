@@ -6,30 +6,27 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.Utils;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
+/**
+ * Created by satyanarayana.avv on 13-05-2016.
+ */
 public class StockGraphActivity extends AppCompatActivity implements
-    LoaderManager.LoaderCallbacks<Cursor>{
+    LoaderManager.LoaderCallbacks<Cursor> {
 
   private static final int CURSOR_LOADER_ID = 0;
   private static final String LOG_TAG = "StockGraphActivity";
@@ -50,13 +47,14 @@ public class StockGraphActivity extends AppCompatActivity implements
     Intent intent = getIntent();
     Bundle args = new Bundle();
     toolbar.setTitle(intent.getStringExtra(getResources().getString(R.string.string_symbol)));
-    args.putString(getResources().getString(R.string.string_symbol), intent.getStringExtra(getResources().getString(R.string.string_symbol)));
+    args.putString(getResources().getString(R.string.string_symbol),
+        intent.getStringExtra(getResources().getString(R.string.string_symbol)));
     getLoaderManager().initLoader(CURSOR_LOADER_ID, args, this);
   }
 
   private void initChart() {
     mChart = (LineChart) findViewById(R.id.stockGraph);
-    if(mChart != null){
+    if (mChart != null) {
       mChart.setDragDecelerationFrictionCoef(0.9f);
       mChart.setDragEnabled(true);
       mChart.setScaleEnabled(true);
@@ -70,7 +68,7 @@ public class StockGraphActivity extends AppCompatActivity implements
   @Override
   public Loader<Cursor> onCreateLoader(int id, Bundle args) {
     return new CursorLoader(this, QuoteProvider.Quotes.CONTENT_URI,
-        new String[]{ QuoteColumns.BIDPRICE,QuoteColumns.CREATED},
+        new String[]{QuoteColumns.BIDPRICE, QuoteColumns.CREATED},
         QuoteColumns.SYMBOL + " = ?",
         new String[]{args.getString(getResources().getString(R.string.string_symbol))},
         null);
@@ -78,7 +76,8 @@ public class StockGraphActivity extends AppCompatActivity implements
 
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-    mCursor = data;;
+    mCursor = data;
+    ;
     setData();
   }
 
@@ -93,18 +92,19 @@ public class StockGraphActivity extends AppCompatActivity implements
     ArrayList<Entry> yVals = new ArrayList<Entry>();
 
     mCursor.moveToFirst();
-    for (int i = 0; i < mCursor.getCount(); i++){
-      try{
-        float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
+    for (int i = 0; i < mCursor.getCount(); i++) {
+      try {
+        float price =
+            Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
         String time = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.CREATED));
-        if(time != null){
+        if (time != null) {
           xVals.add(time);
           yVals.add(new Entry(price, i));
-          Log.d(LOG_TAG, "Time : "+time);
-          Log.d(LOG_TAG, "price : "+price);
+          Log.d(LOG_TAG, "Time : " + time);
+          Log.d(LOG_TAG, "price : " + price);
         }
-      }catch (NumberFormatException exp){
-          exp.printStackTrace();
+      } catch (NumberFormatException exp) {
+        exp.printStackTrace();
       }
 
 
@@ -115,7 +115,7 @@ public class StockGraphActivity extends AppCompatActivity implements
 
     if (mChart.getData() != null &&
         mChart.getData().getDataSetCount() > 0) {
-      set1 = (LineDataSet)mChart.getData().getDataSetByIndex(0);
+      set1 = (LineDataSet) mChart.getData().getDataSetByIndex(0);
       //set1.setYVals(yVals);
       //mChart.getData().setXVals(xVals);
       mChart.notifyDataSetChanged();

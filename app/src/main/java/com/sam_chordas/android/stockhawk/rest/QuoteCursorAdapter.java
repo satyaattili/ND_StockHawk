@@ -18,21 +18,20 @@ import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperAdapter;
 import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperViewHolder;
 import com.sam_chordas.android.stockhawk.utils.AppUtils;
 
-import java.util.Locale;
-
 public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAdapter.ViewHolder>
-    implements ItemTouchHelperAdapter{
+    implements ItemTouchHelperAdapter {
 
   private static Context mContext;
   private static Typeface robotoLight;
   private boolean isPercent;
-  public QuoteCursorAdapter(Context context, Cursor cursor){
+
+  public QuoteCursorAdapter(Context context, Cursor cursor) {
     super(context, cursor);
     mContext = context;
   }
 
   @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     robotoLight = Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Light.ttf");
     View itemView = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.list_item_quote, parent, false);
@@ -40,38 +39,39 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
   }
 
   @Override
-  public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor){
+  public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor) {
     viewHolder.symbol.setText(cursor.getString(cursor.getColumnIndex("symbol")));
     viewHolder.symbol.setContentDescription(cursor.getString(cursor.getColumnIndex("symbol")));
     viewHolder.bidPrice.setText(AppUtils.truncateBidPrice(cursor.getString(cursor.getColumnIndex
         ("bid_price"))));
     viewHolder.bidPrice.setContentDescription(cursor.getString(cursor.getColumnIndex("bid_price")));
     int sdk = Build.VERSION.SDK_INT;
-    if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1){
-      if (sdk < Build.VERSION_CODES.JELLY_BEAN){
+    if (cursor.getInt(cursor.getColumnIndex("is_up")) == 1) {
+      if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
         viewHolder.change.setBackgroundDrawable(
             mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
-      }else {
+      } else {
         viewHolder.change.setBackground(
             mContext.getResources().getDrawable(R.drawable.percent_change_pill_green));
       }
-    } else{
+    } else {
       if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
         viewHolder.change.setBackgroundDrawable(
             mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
-      } else{
+      } else {
         viewHolder.change.setBackground(
             mContext.getResources().getDrawable(R.drawable.percent_change_pill_red));
       }
     }
-    if (AppUtils.showPercent){
+    if (AppUtils.showPercent) {
       viewHolder.change.setText(cursor.getString(cursor.getColumnIndex("percent_change")));
-    } else{
+    } else {
       viewHolder.change.setText(cursor.getString(cursor.getColumnIndex("change")));
     }
   }
 
-  @Override public void onItemDismiss(int position) {
+  @Override
+  public void onItemDismiss(int position) {
     Cursor c = getCursor();
     c.moveToPosition(position);
     String symbol = c.getString(c.getColumnIndex(QuoteColumns.SYMBOL));
@@ -79,16 +79,18 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     notifyItemRemoved(position);
   }
 
-  @Override public int getItemCount() {
+  @Override
+  public int getItemCount() {
     return super.getItemCount();
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder
-      implements ItemTouchHelperViewHolder, View.OnClickListener{
+      implements ItemTouchHelperViewHolder, View.OnClickListener {
     public final TextView symbol;
     public final TextView bidPrice;
     public final TextView change;
-    public ViewHolder(View itemView){
+
+    public ViewHolder(View itemView) {
       super(itemView);
       symbol = (TextView) itemView.findViewById(R.id.stock_symbol);
       symbol.setTypeface(robotoLight);
@@ -97,12 +99,12 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     }
 
     @Override
-    public void onItemSelected(){
+    public void onItemSelected() {
       itemView.setBackgroundColor(Color.LTGRAY);
     }
 
     @Override
-    public void onItemClear(){
+    public void onItemClear() {
       itemView.setBackgroundColor(0);
     }
 

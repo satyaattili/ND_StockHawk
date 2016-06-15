@@ -20,7 +20,7 @@ import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
  */
 public class SHWidgetProvider extends AppWidgetProvider {
 
-  private static final String TAG ="SHWidgetProvider" ;
+  private static final String TAG = "SHWidgetProvider";
 
   @Override
   public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -53,7 +53,7 @@ public class SHWidgetProvider extends AppWidgetProvider {
    * Sets the remote adapter used to fill in the list items
    *
    * @param context the context used to launch the intent
-   * @param views RemoteViews to set the RemoteAdapter
+   * @param views   RemoteViews to set the RemoteAdapter
    */
   @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
   private void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
@@ -65,7 +65,7 @@ public class SHWidgetProvider extends AppWidgetProvider {
    * Sets the remote adapter used to fill in the list items
    *
    * @param context the context to launch the intent
-   * @param views RemoteViews to set the RemoteAdapter
+   * @param views   RemoteViews to set the RemoteAdapter
    */
   @SuppressWarnings("deprecation")
   private void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {

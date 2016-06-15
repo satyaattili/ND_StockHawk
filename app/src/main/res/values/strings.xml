@@ -8,11 +8,11 @@
     <string name="symbol_search">Symbol Search</string>
     <string name="content_test">Search for a Stock Symbol</string>
     <string name="input_hint">FB</string>
-    <string name="input_prefill"></string>
+    <string name="input_prefill" translatable="false"></string>
     <string name="network_toast">Uh-oh! This app requires an internet connection</string>
 
 
-    <string name="txt_google">GOOG</string>
+    <string name="txt_google" translatable="false">GOOG</string>
     <string name="txt_1000" translatable="false">1000.00</string>
     <string name="txt_100" translatable="false">100%</string>
     <string name="txt_stock_already_added">This stock is already saved!</string>
@@ -20,4 +20,6 @@
     <string name="string_symbol" translatable="false">symbol</string>
     <string name="txt_stockvalue">Stock Value</string>
     <string name="string_set_background_resource" translatable="false">setBackgroundResource</string>
+    <string name="no_internet_connection">No Internet connection</string>
+
 </resources>

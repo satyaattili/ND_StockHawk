@@ -21,6 +21,7 @@
         <activity
             android:name=".ui.MyStocksActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -51,6 +52,7 @@
             android:exported="false"/>
 
         <activity android:name=".ui.StockGraphActivity"
+                  android:screenOrientation="portrait"
                   android:theme="@style/AppTheme.NoActionBar">
         </activity>
 

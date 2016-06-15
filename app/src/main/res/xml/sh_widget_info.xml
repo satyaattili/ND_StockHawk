@@ -4,7 +4,7 @@
                     android:initialLayout="@layout/sh_widget_layout"
                     android:minHeight="40dp"
                     android:minWidth="250dp"
-                    android:previewImage="@drawable/ic_alert_error"
+                    android:previewImage="@mipmap/ic_launcher"
                     android:resizeMode="vertical|horizontal"
                     android:updatePeriodMillis="0"
                     android:widgetCategory="home_screen">

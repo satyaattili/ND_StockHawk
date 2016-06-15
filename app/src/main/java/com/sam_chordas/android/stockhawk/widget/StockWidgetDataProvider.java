@@ -13,15 +13,14 @@ import android.widget.RemoteViewsService;
 import com.sam_chordas.android.stockhawk.R;
 import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
-import com.sam_chordas.android.stockhawk.service.StockWidgetRemoteViewsService;
 
 /**
  * Created by satyanarayana.avv on 17-05-2016.
  */
+
 public class StockWidgetDataProvider implements RemoteViewsService.RemoteViewsFactory {
 
   private Context mContext;
-
   private Cursor data = null;
 
   public StockWidgetDataProvider(Context context, Intent intent) {
@@ -72,15 +71,15 @@ public class StockWidgetDataProvider implements RemoteViewsService.RemoteViewsFa
 
   @Override
   public RemoteViews getViewAt(int position) {
-    Log.d("WServ", "getViewAt : "+position);
+    Log.d("WServ", "getViewAt : " + position);
     if (position == AdapterView.INVALID_POSITION ||
         data == null || !data.moveToPosition(position)) {
       return null;
     }
 
-    RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote);
+    RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.list_item_quote_widget);
     String symbol = data.getString(data.getColumnIndex("symbol"));
-    Log.d("WServ", "symbol : "+symbol);
+    Log.d("WServ", "symbol : " + symbol);
 
     views.setTextViewText(R.id.stock_symbol, symbol);
     views.setTextViewText(R.id.bid_price, data.getString(data.getColumnIndex("bid_price")));
@@ -107,7 +106,7 @@ public class StockWidgetDataProvider implements RemoteViewsService.RemoteViewsFa
 
   @Override
   public long getItemId(int position) {
-    if (data.moveToPosition(position)){
+    if (data.moveToPosition(position)) {
       return data.getLong(data.getColumnIndexOrThrow(QuoteColumns._ID));
     }
     return position;
